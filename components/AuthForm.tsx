@@ -15,7 +15,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "@/firebase/client";
-import { signIn, signUIp } from "@/lib/actions/auth.action";
+import { signIn, signUp } from "@/lib/actions/auth.action";
 
 const authFormSchema = (type: FormType) =>
   z.object({
@@ -47,7 +47,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           password
         );
 
-        const result = await signUIp({
+        const result = await signUp({
           uid: userCredentials.user.uid,
           name: name!,
           email,

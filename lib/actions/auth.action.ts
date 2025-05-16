@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 const ONE_WEEK = 60 * 60 * 24 * 7;
 
-export const signUIp = async (params: SignUpParams) => {
+export const signUp = async (params: SignUpParams) => {
   const { uid, name, email } = params;
 
   try {
