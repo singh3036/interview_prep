@@ -188,6 +188,229 @@ export const mappings = {
 //   finalAssessment: z.string(),
 // });
 
+export const generator = {
+  name: "interview_prep",
+  nodes: [
+    {
+      name: "start_node",
+      type: "start",
+      metadata: {
+        position: {
+          x: 201.5,
+          y: 109.80000114440918,
+        },
+      },
+    },
+    {
+      name: "conversation_1747797359211",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: 100,
+          y: 291.5500068664551,
+        },
+      },
+      prompt: "Greet the user and help them create a new AI Interviewer.",
+      voice: {
+        model: "aura-2",
+        voiceId: "thalia",
+        provider: "deepgram",
+      },
+      variableExtractionPlan: {
+        output: [
+          {
+            enum: [],
+            type: "string",
+            title: "role",
+            description: "What role would you like to train for ?",
+          },
+          {
+            enum: [],
+            type: "string",
+            title: "type",
+            description:
+              "Are you aiming for technical, behavioral or mixed interiew ? ",
+          },
+          {
+            enum: [],
+            type: "string",
+            title: "level",
+            description: "The job experience level",
+          },
+          {
+            enum: [],
+            type: "string",
+            title: "techstack",
+            description:
+              "A list or technologies to cover during the job interview.",
+          },
+          {
+            enum: [],
+            type: "number",
+            title: "amount",
+            description:
+              "How many questions would you like me to prepare for you ? ",
+          },
+        ],
+      },
+    },
+    {
+      name: "conversation_1747797853202",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: 100,
+          y: 619.4500160217285,
+        },
+      },
+      prompt: "Say that the Interview will be generated shortly.",
+      voice: {
+        model: "aura-2",
+        voiceId: "thalia",
+        provider: "deepgram",
+      },
+    },
+    {
+      name: "apiRequest_1747841549532",
+      type: "apiRequest",
+      metadata: {
+        position: {
+          x: 100,
+          y: 899.600025177002,
+        },
+      },
+      method: "POST",
+      url: "https://interview-prep-sa8u-i0mysetct-singh3036s-projects.vercel.app/api/vapi/generate",
+      headers: {
+        type: "object",
+        properties: {},
+      },
+      body: {
+        type: "object",
+        properties: {
+          role: {
+            type: "string",
+            value: "{{role}}",
+            description: "",
+          },
+          type: {
+            type: "string",
+            value: "{{type}}",
+            description: "",
+          },
+          level: {
+            type: "string",
+            value: "{{level}}",
+            description: "",
+          },
+          amount: {
+            type: "string",
+            value: "{{amount}}",
+            description: "",
+          },
+          userid: {
+            type: "string",
+            value: "{{userid}}",
+            description: "",
+          },
+          techstack: {
+            type: "string",
+            value: "{{techstack}}",
+            description: "",
+          },
+        },
+      },
+      output: {
+        type: "object",
+        properties: {},
+      },
+      mode: "blocking",
+      hooks: [],
+    },
+    {
+      name: "conversation_1747846387818",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: 100,
+          y: 1285.7500343322754,
+        },
+      },
+      prompt:
+        "Say that the interview has been generated and thank the user for the call.",
+      voice: {
+        model: "aura-2",
+        voiceId: "thalia",
+        provider: "deepgram",
+      },
+    },
+    {
+      name: "hangup_1747846593558",
+      type: "hangup",
+      metadata: {
+        position: {
+          x: 193,
+          y: 1565.5000400543213,
+        },
+      },
+    },
+  ],
+  edges: [
+    {
+      from: "conversation_1747797359211",
+      to: "conversation_1747797853202",
+      condition: {
+        type: "ai",
+        prompt: "If the user provides all the required fields",
+      },
+    },
+    {
+      from: "conversation_1747797853202",
+      to: "apiRequest_1747841549532",
+      condition: {
+        type: "ai",
+        prompt: "",
+      },
+    },
+    {
+      from: "apiRequest_1747841549532",
+      to: "conversation_1747846387818",
+      condition: {
+        type: "ai",
+        prompt: "",
+      },
+    },
+    {
+      from: "conversation_1747846387818",
+      to: "hangup_1747846593558",
+      condition: {
+        type: "ai",
+        prompt: "",
+      },
+    },
+    {
+      from: "start_node",
+      to: "conversation_1747797359211",
+      condition: {
+        type: "ai",
+        prompt: "",
+      },
+    },
+  ],
+  model: {
+    model: "gpt-4o",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are a voice assistant helping with creating new AI interviewers. Your task is to collect data from the user",
+      },
+    ],
+    provider: "openai",
+    temperature: 0.7,
+  },
+};
+
 export const interviewCovers = [
   "/adobe.png",
   "/amazon.png",
