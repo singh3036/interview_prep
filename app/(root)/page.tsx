@@ -13,7 +13,7 @@ const page = async () => {
 
   const [userInterviews, latestInterviews] = await Promise.all([
     await getInterviewsByUserId(user?.id ?? ""),
-    getLatestInterviews({ userId: user?.id }),
+    getLatestInterviews({ userId: user?.id ?? "" }),
   ]);
 
   const hasPastInterviews = userInterviews && userInterviews.length > 0;
