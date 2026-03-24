@@ -36,7 +36,7 @@ export const signUp = async (params: SignUpParams) => {
     }
     return {
       success: false,
-      message: "Failed to create and account",
+      message: "Failed to create an account",
     };
   }
 };
@@ -54,11 +54,16 @@ export const signIn = async (params: SignInParams) => {
       };
     }
     await setSessionCookie(idToken);
+
+    return {
+      success: true,
+      message: "Signed in successfully.",
+    };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "Failed to log into an accont",
+      message: "Failed to log into an account",
     };
   }
 };
